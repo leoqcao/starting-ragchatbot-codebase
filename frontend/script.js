@@ -122,10 +122,21 @@ function addMessage(content, type, sources = null, isWelcome = false) {
     let html = `<div class="message-content">${displayContent}</div>`;
     
     if (sources && sources.length > 0) {
+        // Format sources - handle both structured objects and plain strings
+        const formattedSources = sources.map(source => {
+            if (typeof source === 'object' && source.link) {
+                // Structured source with clickable link
+                return `<a href="${source.link}" target="_blank" rel="noopener" class="source-link">${escapeHtml(source.display)}</a>`;
+            } else {
+                // Plain text source (backward compatibility)
+                return escapeHtml(source);
+            }
+        });
+        
         html += `
             <details class="sources-collapsible">
                 <summary class="sources-header">Sources</summary>
-                <div class="sources-content">${sources.join(', ')}</div>
+                <div class="sources-content">${formattedSources.join(', ')}</div>
             </details>
         `;
     }
