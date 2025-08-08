@@ -26,6 +26,9 @@ uploads/
 *.swp
 *.swo
 
+# Trees directory
+.trees/
+
 # OS
 .DS_Store
 Thumbs.db
